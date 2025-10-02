@@ -14,11 +14,9 @@ test_that("Execution and output: plot_de_pieces function", {
                       ylab = "g",
                       title = "Constant growth")
 
-  expect_named(plot)
-
   expect_visible(plot)
 
-  expect_type(plot, "list")
+  expect_true(is_ggplot(plot))
 })
 
 
