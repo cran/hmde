@@ -1,6 +1,6 @@
 Package: hmde
 Title: Hierarchical Methods for Differential Equations
-Version: 1.2.2
+Version: 1.3
 Authors@R: 
     c(
   person(given = "Daniel", family = "Falster", role = c("aut", "ctb"), email = "daniel.falster@unsw.edu.au", comment = c(ORCID = "0000-0002-9814-092X")),
@@ -8,27 +8,28 @@ Authors@R:
   person(given = "Fonti", family = "Kar", role = c("ctb"), email = "f.kar@unsw.edu.au", comment = c(ORCID = "0000-0002-2760-3974")),
   person(given = "David", family=  "Warton", role = c("aut", "ctb"), email = "david.warton@unsw.edu.au", comment = c(ORCID = "0000-0002-1642-628X"))
     )
-Description: Wrapper for Stan that offers a number of in-built models to implement a hierarchical Bayesian longitudinal model for repeat observation data. Model choice selects the differential equation that is fit to the observations. Single and multi-individual models are available. O'Brien et al. (2024) <doi:10.1111/2041-210X.14463>.
+Description: Wrapper for 'Stan' that offers a number of in-built models to implement a hierarchical Bayesian longitudinal model for repeat observation data. Model choice selects the differential equation that is fit to the observations. Single and multi-individual models are available. O'Brien et al. (2024) <doi:10.1111/2041-210X.14463>.
 License: GPL (>= 3)
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Biarch: true
 Depends: R (>= 4.1.0)
 Imports: methods, dplyr, ggplot2, purrr, Rcpp (>= 0.12.0), RcppParallel
-        (>= 5.0.1), rlang, rstan (>= 2.18.1), rstantools (>= 2.3.1.1)
+        (>= 5.0.1), rlang, rstan (>= 2.18.1), rstantools (>= 2.3.1.1),
+        cowplot
 LinkingTo: BH (>= 1.66.0), Rcpp (>= 0.12.0), RcppEigen (>= 0.3.3.3.0),
         RcppParallel (>= 5.0.1), rstan (>= 2.18.1), StanHeaders (>=
         2.18.0)
 SystemRequirements: GNU make
 Suggests: knitr, rmarkdown, testthat (>= 3.0.0), withr, mnormt, here,
-        patchwork, deSolve, cowplot, mixtools, MASS
+        patchwork, deSolve, mixtools, MASS
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 LazyData: true
 URL: https://traitecoevo.github.io/hmde/
 BugReports: https://github.com/traitecoevo/hmde/issues
 NeedsCompilation: yes
-Packaged: 2025-10-02 09:06:05 UTC; tess
+Packaged: 2025-11-20 04:37:24 UTC; tess
 Author: Daniel Falster [aut, ctb] (ORCID:
     <https://orcid.org/0000-0002-9814-092X>),
   Tess O'Brien [aut, cre, cph] (ORCID:
@@ -38,4 +39,4 @@ Author: Daniel Falster [aut, ctb] (ORCID:
     <https://orcid.org/0000-0002-1642-628X>)
 Maintainer: Tess O'Brien <tess_obrien@fastmail.com>
 Repository: CRAN
-Date/Publication: 2025-10-02 10:30:02 UTC
+Date/Publication: 2025-11-27 00:00:09 UTC

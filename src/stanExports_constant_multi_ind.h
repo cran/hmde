@@ -31,15 +31,15 @@ static constexpr std::array<const char*, 60> locations_array__ =
   {" (found before start of program)",
   " (in 'constant_multi_ind', line 26, column 2 to column 31)",
   " (in 'constant_multi_ind', line 27, column 2 to column 32)",
-  " (in 'constant_multi_ind', line 28, column 2 to column 23)",
-  " (in 'constant_multi_ind', line 29, column 2 to column 35)",
+  " (in 'constant_multi_ind', line 28, column 2 to column 25)",
+  " (in 'constant_multi_ind', line 29, column 2 to column 32)",
   " (in 'constant_multi_ind', line 31, column 2 to column 35)",
   " (in 'constant_multi_ind', line 65, column 2 to column 20)",
-  " (in 'constant_multi_ind', line 67, column 2 to column 43)",
-  " (in 'constant_multi_ind', line 68, column 2 to column 46)",
+  " (in 'constant_multi_ind', line 67, column 2 to column 45)",
+  " (in 'constant_multi_ind', line 68, column 2 to column 43)",
   " (in 'constant_multi_ind', line 69, column 2 to column 46)",
-  " (in 'constant_multi_ind', line 70, column 2 to column 64)",
-  " (in 'constant_multi_ind', line 71, column 2 to column 70)",
+  " (in 'constant_multi_ind', line 70, column 2 to column 68)",
+  " (in 'constant_multi_ind', line 71, column 2 to column 64)",
   " (in 'constant_multi_ind', line 72, column 2 to column 70)",
   " (in 'constant_multi_ind', line 76, column 6 to column 36)",
   " (in 'constant_multi_ind', line 75, column 23 to line 77, column 5)",
@@ -64,9 +64,9 @@ static constexpr std::array<const char*, 60> locations_array__ =
   " (in 'constant_multi_ind', line 36, column 19 to line 47, column 3)",
   " (in 'constant_multi_ind', line 36, column 2 to line 47, column 3)",
   " (in 'constant_multi_ind', line 49, column 2 to column 44)",
-  " (in 'constant_multi_ind', line 52, column 2 to line 53, column 40)",
-  " (in 'constant_multi_ind', line 55, column 2 to line 56, column 54)",
-  " (in 'constant_multi_ind', line 57, column 2 to line 58, column 59)",
+  " (in 'constant_multi_ind', line 52, column 2 to line 53, column 37)",
+  " (in 'constant_multi_ind', line 55, column 2 to line 56, column 56)",
+  " (in 'constant_multi_ind', line 57, column 2 to line 58, column 56)",
   " (in 'constant_multi_ind', line 60, column 2 to line 61, column 63)",
   " (in 'constant_multi_ind', line 13, column 2 to column 12)",
   " (in 'constant_multi_ind', line 14, column 2 to column 12)",
@@ -78,8 +78,8 @@ static constexpr std::array<const char*, 60> locations_array__ =
   " (in 'constant_multi_ind', line 17, column 2 to column 19)",
   " (in 'constant_multi_ind', line 18, column 13 to column 18)",
   " (in 'constant_multi_ind', line 18, column 2 to column 20)",
-  " (in 'constant_multi_ind', line 19, column 2 to column 37)",
-  " (in 'constant_multi_ind', line 20, column 2 to column 40)",
+  " (in 'constant_multi_ind', line 19, column 2 to column 39)",
+  " (in 'constant_multi_ind', line 20, column 2 to column 37)",
   " (in 'constant_multi_ind', line 21, column 2 to column 40)",
   " (in 'constant_multi_ind', line 26, column 24 to column 29)",
   " (in 'constant_multi_ind', line 27, column 25 to column 30)",
@@ -146,8 +146,8 @@ private:
   std::vector<int> obs_index;
   std::vector<double> time;
   std::vector<int> ind_id;
-  std::vector<double> prior_pars_pop_log_beta_mu;
-  std::vector<double> prior_pars_pop_log_beta_sigma;
+  std::vector<double> prior_pars_pop_log_beta_mean;
+  std::vector<double> prior_pars_pop_log_beta_sd;
   std::vector<double> prior_pars_global_error_sigma;
 public:
   ~model_constant_multi_ind() {}
@@ -218,21 +218,20 @@ public:
       ind_id = context__.vals_i("ind_id");
       current_statement__ = 50;
       context__.validate_dims("data initialization",
-        "prior_pars_pop_log_beta_mu", "double",
+        "prior_pars_pop_log_beta_mean", "double",
         std::vector<size_t>{static_cast<size_t>(2)});
-      prior_pars_pop_log_beta_mu = std::vector<double>(2,
-                                     std::numeric_limits<double>::quiet_NaN());
+      prior_pars_pop_log_beta_mean = std::vector<double>(2,
+                                       std::numeric_limits<double>::quiet_NaN());
       current_statement__ = 50;
-      prior_pars_pop_log_beta_mu = context__.vals_r("prior_pars_pop_log_beta_mu");
+      prior_pars_pop_log_beta_mean = context__.vals_r("prior_pars_pop_log_beta_mean");
       current_statement__ = 51;
       context__.validate_dims("data initialization",
-        "prior_pars_pop_log_beta_sigma", "double",
+        "prior_pars_pop_log_beta_sd", "double",
         std::vector<size_t>{static_cast<size_t>(2)});
-      prior_pars_pop_log_beta_sigma = std::vector<double>(2,
-                                        std::numeric_limits<double>::quiet_NaN(
-                                          ));
+      prior_pars_pop_log_beta_sd = std::vector<double>(2,
+                                     std::numeric_limits<double>::quiet_NaN());
       current_statement__ = 51;
-      prior_pars_pop_log_beta_sigma = context__.vals_r("prior_pars_pop_log_beta_sigma");
+      prior_pars_pop_log_beta_sd = context__.vals_r("prior_pars_pop_log_beta_sd");
       current_statement__ = 52;
       context__.validate_dims("data initialization",
         "prior_pars_global_error_sigma", "double",
@@ -290,13 +289,13 @@ public:
       current_statement__ = 2;
       ind_beta = in__.template read_constrain_lb<
                    std::vector<local_scalar_t__>, jacobian__>(0, lp__, n_ind);
-      local_scalar_t__ pop_log_beta_mu = DUMMY_VAR__;
+      local_scalar_t__ pop_log_beta_mean = DUMMY_VAR__;
       current_statement__ = 3;
-      pop_log_beta_mu = in__.template read<local_scalar_t__>();
-      local_scalar_t__ pop_log_beta_sigma = DUMMY_VAR__;
+      pop_log_beta_mean = in__.template read<local_scalar_t__>();
+      local_scalar_t__ pop_log_beta_sd = DUMMY_VAR__;
       current_statement__ = 4;
-      pop_log_beta_sigma = in__.template read_constrain_lb<local_scalar_t__,
-                             jacobian__>(0, lp__);
+      pop_log_beta_sd = in__.template read_constrain_lb<local_scalar_t__,
+                          jacobian__>(0, lp__);
       local_scalar_t__ global_error_sigma = DUMMY_VAR__;
       current_statement__ = 5;
       global_error_sigma = in__.template read_constrain_lb<local_scalar_t__,
@@ -350,22 +349,22 @@ public:
                          global_error_sigma));
         current_statement__ = 36;
         lp_accum__.add(stan::math::lognormal_lpdf<propto__>(ind_beta,
-                         pop_log_beta_mu, pop_log_beta_sigma));
+                         pop_log_beta_mean, pop_log_beta_sd));
         current_statement__ = 37;
-        lp_accum__.add(stan::math::normal_lpdf<propto__>(pop_log_beta_mu,
-                         stan::model::rvalue(prior_pars_pop_log_beta_mu,
-                           "prior_pars_pop_log_beta_mu",
+        lp_accum__.add(stan::math::normal_lpdf<propto__>(pop_log_beta_mean,
+                         stan::model::rvalue(prior_pars_pop_log_beta_mean,
+                           "prior_pars_pop_log_beta_mean",
                            stan::model::index_uni(1)),
-                         stan::model::rvalue(prior_pars_pop_log_beta_mu,
-                           "prior_pars_pop_log_beta_mu",
+                         stan::model::rvalue(prior_pars_pop_log_beta_mean,
+                           "prior_pars_pop_log_beta_mean",
                            stan::model::index_uni(2))));
         current_statement__ = 38;
-        lp_accum__.add(stan::math::cauchy_lpdf<propto__>(pop_log_beta_sigma,
-                         stan::model::rvalue(prior_pars_pop_log_beta_sigma,
-                           "prior_pars_pop_log_beta_sigma",
+        lp_accum__.add(stan::math::cauchy_lpdf<propto__>(pop_log_beta_sd,
+                         stan::model::rvalue(prior_pars_pop_log_beta_sd,
+                           "prior_pars_pop_log_beta_sd",
                            stan::model::index_uni(1)),
-                         stan::model::rvalue(prior_pars_pop_log_beta_sigma,
-                           "prior_pars_pop_log_beta_sigma",
+                         stan::model::rvalue(prior_pars_pop_log_beta_sd,
+                           "prior_pars_pop_log_beta_sd",
                            stan::model::index_uni(2))));
         current_statement__ = 39;
         lp_accum__.add(stan::math::cauchy_lpdf<propto__>(global_error_sigma,
@@ -423,21 +422,21 @@ public:
       current_statement__ = 2;
       ind_beta = in__.template read_constrain_lb<
                    std::vector<local_scalar_t__>, jacobian__>(0, lp__, n_ind);
-      double pop_log_beta_mu = std::numeric_limits<double>::quiet_NaN();
+      double pop_log_beta_mean = std::numeric_limits<double>::quiet_NaN();
       current_statement__ = 3;
-      pop_log_beta_mu = in__.template read<local_scalar_t__>();
-      double pop_log_beta_sigma = std::numeric_limits<double>::quiet_NaN();
+      pop_log_beta_mean = in__.template read<local_scalar_t__>();
+      double pop_log_beta_sd = std::numeric_limits<double>::quiet_NaN();
       current_statement__ = 4;
-      pop_log_beta_sigma = in__.template read_constrain_lb<local_scalar_t__,
-                             jacobian__>(0, lp__);
+      pop_log_beta_sd = in__.template read_constrain_lb<local_scalar_t__,
+                          jacobian__>(0, lp__);
       double global_error_sigma = std::numeric_limits<double>::quiet_NaN();
       current_statement__ = 5;
       global_error_sigma = in__.template read_constrain_lb<local_scalar_t__,
                              jacobian__>(0, lp__);
       out__.write(ind_y_0);
       out__.write(ind_beta);
-      out__.write(pop_log_beta_mu);
-      out__.write(pop_log_beta_sigma);
+      out__.write(pop_log_beta_mean);
+      out__.write(pop_log_beta_sd);
       out__.write(global_error_sigma);
       if (stan::math::logical_negation(
             (stan::math::primitive_value(emit_transformed_parameters__) ||
@@ -449,20 +448,20 @@ public:
       }
       std::vector<double> y_hat =
         std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
-      std::vector<double> check_prior_pars_pop_log_beta_mu =
+      std::vector<double> check_prior_pars_pop_log_beta_mean =
         std::vector<double>(2, std::numeric_limits<double>::quiet_NaN());
-      std::vector<double> check_prior_pars_pop_log_beta_sigma =
+      std::vector<double> check_prior_pars_pop_log_beta_sd =
         std::vector<double>(2, std::numeric_limits<double>::quiet_NaN());
       std::vector<double> check_prior_pars_global_error_sigma =
         std::vector<double>(2, std::numeric_limits<double>::quiet_NaN());
       current_statement__ = 10;
-      stan::model::assign(check_prior_pars_pop_log_beta_mu,
-        prior_pars_pop_log_beta_mu,
-        "assigning variable check_prior_pars_pop_log_beta_mu");
+      stan::model::assign(check_prior_pars_pop_log_beta_mean,
+        prior_pars_pop_log_beta_mean,
+        "assigning variable check_prior_pars_pop_log_beta_mean");
       current_statement__ = 11;
-      stan::model::assign(check_prior_pars_pop_log_beta_sigma,
-        prior_pars_pop_log_beta_sigma,
-        "assigning variable check_prior_pars_pop_log_beta_sigma");
+      stan::model::assign(check_prior_pars_pop_log_beta_sd,
+        prior_pars_pop_log_beta_sd,
+        "assigning variable check_prior_pars_pop_log_beta_sd");
       current_statement__ = 12;
       stan::model::assign(check_prior_pars_global_error_sigma,
         prior_pars_global_error_sigma,
@@ -506,8 +505,8 @@ public:
         }
       }
       out__.write(y_hat);
-      out__.write(check_prior_pars_pop_log_beta_mu);
-      out__.write(check_prior_pars_pop_log_beta_sigma);
+      out__.write(check_prior_pars_pop_log_beta_mean);
+      out__.write(check_prior_pars_pop_log_beta_sd);
       out__.write(check_prior_pars_global_error_sigma);
     } catch (const std::exception& e) {
       stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -543,14 +542,14 @@ public:
         in__.read<std::vector<local_scalar_t__>>(n_ind),
         "assigning variable ind_beta");
       out__.write_free_lb(0, ind_beta);
-      local_scalar_t__ pop_log_beta_mu = DUMMY_VAR__;
+      local_scalar_t__ pop_log_beta_mean = DUMMY_VAR__;
       current_statement__ = 3;
-      pop_log_beta_mu = in__.read<local_scalar_t__>();
-      out__.write(pop_log_beta_mu);
-      local_scalar_t__ pop_log_beta_sigma = DUMMY_VAR__;
+      pop_log_beta_mean = in__.read<local_scalar_t__>();
+      out__.write(pop_log_beta_mean);
+      local_scalar_t__ pop_log_beta_sd = DUMMY_VAR__;
       current_statement__ = 4;
-      pop_log_beta_sigma = in__.read<local_scalar_t__>();
-      out__.write_free_lb(0, pop_log_beta_sigma);
+      pop_log_beta_sd = in__.read<local_scalar_t__>();
+      out__.write_free_lb(0, pop_log_beta_sd);
       local_scalar_t__ global_error_sigma = DUMMY_VAR__;
       current_statement__ = 5;
       global_error_sigma = in__.read<local_scalar_t__>();
@@ -577,11 +576,11 @@ public:
       context__.validate_dims("parameter initialization", "ind_beta",
         "double", std::vector<size_t>{static_cast<size_t>(n_ind)});
       current_statement__ = 3;
-      context__.validate_dims("parameter initialization", "pop_log_beta_mu",
-        "double", std::vector<size_t>{});
-      current_statement__ = 4;
       context__.validate_dims("parameter initialization",
-        "pop_log_beta_sigma", "double", std::vector<size_t>{});
+        "pop_log_beta_mean", "double", std::vector<size_t>{});
+      current_statement__ = 4;
+      context__.validate_dims("parameter initialization", "pop_log_beta_sd",
+        "double", std::vector<size_t>{});
       current_statement__ = 5;
       context__.validate_dims("parameter initialization",
         "global_error_sigma", "double", std::vector<size_t>{});
@@ -597,14 +596,14 @@ public:
       current_statement__ = 2;
       ind_beta = context__.vals_r("ind_beta");
       out__.write_free_lb(0, ind_beta);
-      local_scalar_t__ pop_log_beta_mu = DUMMY_VAR__;
+      local_scalar_t__ pop_log_beta_mean = DUMMY_VAR__;
       current_statement__ = 3;
-      pop_log_beta_mu = context__.vals_r("pop_log_beta_mu")[(1 - 1)];
-      out__.write(pop_log_beta_mu);
-      local_scalar_t__ pop_log_beta_sigma = DUMMY_VAR__;
+      pop_log_beta_mean = context__.vals_r("pop_log_beta_mean")[(1 - 1)];
+      out__.write(pop_log_beta_mean);
+      local_scalar_t__ pop_log_beta_sd = DUMMY_VAR__;
       current_statement__ = 4;
-      pop_log_beta_sigma = context__.vals_r("pop_log_beta_sigma")[(1 - 1)];
-      out__.write_free_lb(0, pop_log_beta_sigma);
+      pop_log_beta_sd = context__.vals_r("pop_log_beta_sd")[(1 - 1)];
+      out__.write_free_lb(0, pop_log_beta_sd);
       local_scalar_t__ global_error_sigma = DUMMY_VAR__;
       current_statement__ = 5;
       global_error_sigma = context__.vals_r("global_error_sigma")[(1 - 1)];
@@ -618,13 +617,12 @@ public:
                   emit_transformed_parameters__ = true, const bool
                   emit_generated_quantities__ = true) const {
     names__ = std::vector<std::string>{"ind_y_0", "ind_beta",
-                "pop_log_beta_mu", "pop_log_beta_sigma",
-                "global_error_sigma"};
+                "pop_log_beta_mean", "pop_log_beta_sd", "global_error_sigma"};
     if (emit_transformed_parameters__) {}
     if (emit_generated_quantities__) {
       std::vector<std::string>
-        temp{"y_hat", "check_prior_pars_pop_log_beta_mu",
-             "check_prior_pars_pop_log_beta_sigma",
+        temp{"y_hat", "check_prior_pars_pop_log_beta_mean",
+             "check_prior_pars_pop_log_beta_sd",
              "check_prior_pars_global_error_sigma"};
       names__.reserve(names__.size() + temp.size());
       names__.insert(names__.end(), temp.begin(), temp.end());
@@ -663,8 +661,8 @@ public:
       param_names__.emplace_back(std::string() + "ind_beta" + '.' +
         std::to_string(sym1__));
     }
-    param_names__.emplace_back(std::string() + "pop_log_beta_mu");
-    param_names__.emplace_back(std::string() + "pop_log_beta_sigma");
+    param_names__.emplace_back(std::string() + "pop_log_beta_mean");
+    param_names__.emplace_back(std::string() + "pop_log_beta_sd");
     param_names__.emplace_back(std::string() + "global_error_sigma");
     if (emit_transformed_parameters__) {}
     if (emit_generated_quantities__) {
@@ -674,12 +672,12 @@ public:
       }
       for (int sym1__ = 1; sym1__ <= 2; ++sym1__) {
         param_names__.emplace_back(std::string() +
-          "check_prior_pars_pop_log_beta_mu" + '.' + std::to_string(sym1__));
+          "check_prior_pars_pop_log_beta_mean" + '.' +
+          std::to_string(sym1__));
       }
       for (int sym1__ = 1; sym1__ <= 2; ++sym1__) {
         param_names__.emplace_back(std::string() +
-          "check_prior_pars_pop_log_beta_sigma" + '.' +
-          std::to_string(sym1__));
+          "check_prior_pars_pop_log_beta_sd" + '.' + std::to_string(sym1__));
       }
       for (int sym1__ = 1; sym1__ <= 2; ++sym1__) {
         param_names__.emplace_back(std::string() +
@@ -700,8 +698,8 @@ public:
       param_names__.emplace_back(std::string() + "ind_beta" + '.' +
         std::to_string(sym1__));
     }
-    param_names__.emplace_back(std::string() + "pop_log_beta_mu");
-    param_names__.emplace_back(std::string() + "pop_log_beta_sigma");
+    param_names__.emplace_back(std::string() + "pop_log_beta_mean");
+    param_names__.emplace_back(std::string() + "pop_log_beta_sd");
     param_names__.emplace_back(std::string() + "global_error_sigma");
     if (emit_transformed_parameters__) {}
     if (emit_generated_quantities__) {
@@ -711,12 +709,12 @@ public:
       }
       for (int sym1__ = 1; sym1__ <= 2; ++sym1__) {
         param_names__.emplace_back(std::string() +
-          "check_prior_pars_pop_log_beta_mu" + '.' + std::to_string(sym1__));
+          "check_prior_pars_pop_log_beta_mean" + '.' +
+          std::to_string(sym1__));
       }
       for (int sym1__ = 1; sym1__ <= 2; ++sym1__) {
         param_names__.emplace_back(std::string() +
-          "check_prior_pars_pop_log_beta_sigma" + '.' +
-          std::to_string(sym1__));
+          "check_prior_pars_pop_log_beta_sd" + '.' + std::to_string(sym1__));
       }
       for (int sym1__ = 1; sym1__ <= 2; ++sym1__) {
         param_names__.emplace_back(std::string() +
@@ -726,10 +724,10 @@ public:
     }
   }
   inline std::string get_constrained_sizedtypes() const {
-    return std::string("[{\"name\":\"ind_y_0\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_ind) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ind_beta\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_ind) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"pop_log_beta_mu\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"pop_log_beta_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"y_hat\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_obs) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_pop_log_beta_mu\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_pop_log_beta_sigma\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_global_error_sigma\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"}]");
+    return std::string("[{\"name\":\"ind_y_0\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_ind) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ind_beta\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_ind) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"pop_log_beta_mean\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"pop_log_beta_sd\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"y_hat\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_obs) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_pop_log_beta_mean\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_pop_log_beta_sd\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_global_error_sigma\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"}]");
   }
   inline std::string get_unconstrained_sizedtypes() const {
-    return std::string("[{\"name\":\"ind_y_0\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_ind) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ind_beta\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_ind) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"pop_log_beta_mu\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"pop_log_beta_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"y_hat\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_obs) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_pop_log_beta_mu\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_pop_log_beta_sigma\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_global_error_sigma\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"}]");
+    return std::string("[{\"name\":\"ind_y_0\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_ind) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ind_beta\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_ind) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"pop_log_beta_mean\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"pop_log_beta_sd\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"y_hat\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(n_obs) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_pop_log_beta_mean\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_pop_log_beta_sd\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"check_prior_pars_global_error_sigma\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(2) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"}]");
   }
   // Begin method overload boilerplate
   template <typename RNG> inline void

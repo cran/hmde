@@ -136,10 +136,20 @@ hist_a + hist_b + hist_c + hist_d + plot_layout(ncol = 2)
 hmde_model("constant_multi_ind") |> 
   names()
 
+print(hmde_model("constant_multi_ind"))
+summary(hmde_model("constant_multi_ind"))
+
 ## -----------------------------------------------------------------------------
 trout_constant_fit <- hmde_model("constant_multi_ind") |>
   hmde_assign_data(data = Trout_Size_Data)  |>
   hmde_run(chains = 4, cores = 1, iter = 2000)
+
+## -----------------------------------------------------------------------------
+# Returns a list of R_hat values
+hmde_extract_Rhat(trout_constant_fit)
+
+# Returns a histogram of R_hat values
+hmde_plot_Rhat_hist(trout_constant_fit)
 
 ## -----------------------------------------------------------------------------
 trout_constant_estimates <- hmde_extract_estimates(                                 
