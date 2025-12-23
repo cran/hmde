@@ -1,6 +1,6 @@
 Package: hmde
 Title: Hierarchical Methods for Differential Equations
-Version: 1.3
+Version: 1.3.1
 Authors@R: 
     c(
   person(given = "Daniel", family = "Falster", role = c("aut", "ctb"), email = "daniel.falster@unsw.edu.au", comment = c(ORCID = "0000-0002-9814-092X")),
@@ -29,7 +29,7 @@ LazyData: true
 URL: https://traitecoevo.github.io/hmde/
 BugReports: https://github.com/traitecoevo/hmde/issues
 NeedsCompilation: yes
-Packaged: 2025-11-20 04:37:24 UTC; tess
+Packaged: 2025-12-23 03:02:56 UTC; tess
 Author: Daniel Falster [aut, ctb] (ORCID:
     <https://orcid.org/0000-0002-9814-092X>),
   Tess O'Brien [aut, cre, cph] (ORCID:
@@ -39,4 +39,4 @@ Author: Daniel Falster [aut, ctb] (ORCID:
     <https://orcid.org/0000-0002-1642-628X>)
 Maintainer: Tess O'Brien <tess_obrien@fastmail.com>
 Repository: CRAN
-Date/Publication: 2025-11-27 00:00:09 UTC
+Date/Publication: 2025-12-23 04:00:02 UTC
